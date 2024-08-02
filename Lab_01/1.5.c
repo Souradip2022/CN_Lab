@@ -8,7 +8,7 @@ unsigned int reverse_byte_order(unsigned int num) {
 }
 
 void print_bytes(unsigned int num) {
-  unsigned char *byte = (unsigned char *) &num;
+  char *byte = (char *) &num;
   for (int i = 0; i < 4; i++) {
     printf("Byte %d: 0x%02x\n", i, byte[i]);
   }
