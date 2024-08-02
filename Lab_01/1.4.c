@@ -1,17 +1,22 @@
 #include <stdio.h>
 
-int main() {
-  int a, b, c, d;
-  int variable = 0x12345678;
-  a = (variable & 0xFF);
-  b = ((variable >> 8) & 0xFF);
-  c = ((variable >> 16) & 0xFF);
-  d = ((variable >> 24) & 0xFF);
+struct pkt {
+    char ch1;
+    char ch2[2];
+    char ch3;
+} a;
 
-  printf("a = %02x\n", a);
-  printf("b = %02x\n", b);
-  printf("c = %02x\n", c);
-  printf("c = %02x\n", d);
+int main() {
+
+  unsigned int n;
+  printf("Enter a number: ");
+  scanf(" %d", &n);
+  a.ch1 = n & 0xFF;
+  a.ch2[0] = (n >> 8) & 0xFF;
+  a.ch2[1] = (n >> 16) & 0xFF;
+  a.ch3 = (n >> 24) & 0xFF;
+
+  printf("ch1: %d\nch2: %d, %d\nch3 %d\n", a.ch1, a.ch2[0], a.ch2[1], a.ch3);
 
   return 0;
 }
