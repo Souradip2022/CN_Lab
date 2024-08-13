@@ -17,6 +17,11 @@ int main() {
   a.ch3 = (n >> 24) & 0xFF;
 
   printf("ch1: %d\nch2: %d, %d\nch3 %d\n", a.ch1, a.ch2[0], a.ch2[1], a.ch3);
+  unsigned int reconstructed_num = (a.ch1 ) |
+                                   (a.ch2[0]<< 8) |
+                                   (a.ch2[1]  << 16) |
+                                   (a.ch3 << 24);
 
+  printf("Reconstructed decimal number: %u\n", reconstructed_num);
   return 0;
 }
