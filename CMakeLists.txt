@@ -3,7 +3,8 @@ project(CN C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(1.1 Lab_01/1.1.c)
+add_executable(1.1 Lab_01/1.1.c
+        test.c)
 add_executable(1.2 Lab_01/1.2.c)
 add_executable(1.3 Lab_01/1.3.c)
 add_executable(1.4 Lab_01/1.4.c)
@@ -24,4 +25,9 @@ add_executable(sort_server Lab_04/sort_server.c)
 
 add_executable(file_transfer_server Lab_05/file_transfer_server.c)
 add_executable(client Lab_05/file_download_client.c)
+
+add_executable(salary_client Lab_07/client.c)
+add_executable(salary_server Lab_07/server.c)
+
+add_executable(test test.c)
 
