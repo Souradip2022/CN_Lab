@@ -28,6 +28,7 @@ int main() {
   }
 
   serv_addr.sin_family = AF_INET;
+  serv_addr.sin_addr.s_addr = INADDR_ANY;
   serv_addr.sin_port = htons(8080);
 
 
@@ -46,7 +47,7 @@ int main() {
 
   // Read the sorted array from the server
   valread = recv(sock, buffer, sizeof(buffer), 0);
-  if(valread <= 0){
+  if (valread <= 0) {
     perror("Unable to receive value form sorted array");
     exit(EXIT_FAILURE);
   }

@@ -25,9 +25,9 @@ int main() {
 
   memset(buf, 0, sizeof(buf));
   printf("Enter base salary: ");
-  fgets(buf, sizeof(buf), stdin);
+//  fgets(buf, sizeof(buf), stdin);
+  scanf("%s", buf);
 
-  buf[strcspn(buf, "\n")] = 0;
   send(sockfd, buf, strlen(buf), 0);
 
   memset(buf, 0, sizeof(buf));

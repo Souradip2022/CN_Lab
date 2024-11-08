@@ -19,14 +19,12 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
-  // Set up server address structure
-  memset(&server_addr, 0, sizeof(server_addr));
   server_addr.sin_family = AF_INET;
   server_addr.sin_addr.s_addr = INADDR_ANY;
   server_addr.sin_port = htons(PORT);
 
   // Bind the socket to the port
-  if (bind(sockfd, (const struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+  if (bind(sockfd, (const struct sockaddr *) &server_addr, sizeof(server_addr)) < 0) {
     perror("Bind failed");
     close(sockfd);
     exit(EXIT_FAILURE);
@@ -38,7 +36,7 @@ int main() {
     memset(buffer, 0, BUFFER_SIZE);
 
     // Receive message from client
-    int n = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&client_addr, &addr_len);
+    int n = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &client_addr, &addr_len);
     if (n < 0) {
       perror("Receive failed");
       continue;
@@ -48,10 +46,10 @@ int main() {
 
     // Get reply message from server user
     printf("Server: ");
-    fgets(buffer, BUFFER_SIZE, stdin);
-
+//    fgets(buffer, BUFFER_SIZE, stdin);
+    scanf("%s", buffer);
     // Send reply to client
-    sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr *)&client_addr, addr_len);
+    sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr *) &client_addr, addr_len);
   }
 
   close(sockfd);

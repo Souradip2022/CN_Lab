@@ -24,25 +24,20 @@ int main() {
 
   printf("Connected to the server.\n");
 
-  while (1) {  // Loop to continuously send and receive messages
-    // Clear the buffer and get input from the user
-    for (i = 0; i < 100; i++) buf[i] = '\0';
+  while (1) {
+    memset(buf, '\0', sizeof (buf));
     printf("Enter a message to send to the server (or type 'exit' to quit): ");
-    fgets(buf, 100, stdin);
-
-    // Remove newline character from the input
-    buf[strcspn(buf, "\n")] = 0;
+//    fgets(buf, 100, stdin);
+    scanf("%s", buf);
 
     // Check if the user wants to exit
     if (strcmp(buf, "exit") == 0) {
       break;
     }
 
-    // Send the message to the server
     send(sockfd, buf, strlen(buf), 0);
 
-    // Clear the buffer and receive the response from the server
-    for (i = 0; i < 100; i++) buf[i] = '\0';
+    memset(buf, '\0', sizeof (buf));
     recv(sockfd, buf, 100, 0);
     printf("Received from server: %s\n", buf);
   }

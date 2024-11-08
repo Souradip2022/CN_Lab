@@ -19,23 +19,24 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
-  // Set up server address structure
-  memset(&server_addr, 0, sizeof(server_addr));
   server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(PORT);
   server_addr.sin_addr.s_addr = INADDR_ANY;
+  server_addr.sin_port = htons(PORT);
 
   while (1) {
     // Get message from client user
     printf("Client: ");
-    fgets(buffer, BUFFER_SIZE, stdin);
-
+//    fgets(buffer, BUFFER_SIZE, stdin);
+    scanf("%s", buffer);
     // Send message to server
-    sendto(sockfd, buffer, strlen(buffer), 0, (const struct sockaddr *)&server_addr, addr_len);
+    if (sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr *) &server_addr, addr_len) < 0) {
+      perror("Send failed");
+      continue;
+    }
 
     // Receive reply from server
     memset(buffer, 0, BUFFER_SIZE);
-    int n = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&server_addr, &addr_len);
+    int n = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &server_addr, &addr_len);
     if (n < 0) {
       perror("Receive failed");
       continue;

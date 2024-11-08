@@ -1,9 +1,6 @@
 #include<stdio.h>
-#include<sys/types.h>
 #include<sys/socket.h>
 #include<netinet/in.h>
-#include<arpa/inet.h>
-#include<fcntl.h>
 #include<string.h>
 #include<unistd.h>
 
@@ -38,7 +35,8 @@ int main() {
     printf("Client connected.\n");
 
     while (1) {  // Loop to continuously receive messages from the client
-      for (i = 0; i < 100; i++) buf[i] = '\0';
+      memset(buf, '\0', sizeof(buf));  // Initialize buffer to 0 (using memset)
+
       int bytes_received = recv(fd1, buf, 100, 0);
 
       if (bytes_received <= 0) {  // Client disconnected or error
@@ -49,7 +47,7 @@ int main() {
       printf("Received from client: %s\n", buf);
 
       // Respond to the client
-      for (i = 0; i < 100; i++) buf[i] = '\0';
+      memset(buf, '\0', sizeof(buf));  // Initialize buffer to 0 (using memset)
       strcpy(buf, "Message from server");
       send(fd1, buf, 100, 0);
     }
