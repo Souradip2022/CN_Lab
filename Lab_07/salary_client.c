@@ -16,7 +16,6 @@ int main() {
   sa.sin_addr.s_addr = inet_addr("127.0.0.1");
   sa.sin_port = htons(60018);
 
-  // Connect to the server
   if (connect(sockfd, (struct sockaddr *) &sa, sizeof(sa)) == -1) {
     perror("Connection failed");
     return 1;

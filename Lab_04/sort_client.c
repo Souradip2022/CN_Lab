@@ -30,11 +30,6 @@ int main() {
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_port = htons(8080);
 
-  // Convert IPv4 and IPv6 addresses from text to binary form
-  if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
-    printf("Invalid address/ Address not supported\n");
-    return -1;
-  }
 
   // Connect to the server
   printf("Connecting to the server...\n");
@@ -50,7 +45,11 @@ int main() {
   printf("Array sent to the server.\n");
 
   // Read the sorted array from the server
-  valread = read(sock, buffer, sizeof(buffer));
+  valread = recv(sock, buffer, sizeof(buffer), 0);
+  if(valread <= 0){
+    perror("Unable to receive value form sorted array");
+    exit(EXIT_FAILURE);
+  }
   printf("Received sorted array from the server.\n");
 
   // Print the sorted array

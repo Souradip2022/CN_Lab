@@ -1,9 +1,6 @@
 #include<stdio.h>
-#include<sys/types.h>
 #include<sys/socket.h>
 #include<netinet/in.h>
-#include<arpa/inet.h>
-#include<fcntl.h>
 #include<string.h>
 #include<unistd.h>
 #include <stdlib.h>
@@ -38,26 +35,24 @@ int main() {
 
     printf("Client connected.\n");
 
-    while (1) {
-      memset(buf, 0, sizeof(buf));
-      int bytes_received = recv(fd1, buf, sizeof(buf), 0);
+    memset(buf, 0, sizeof(buf));
+    int bytes_received = recv(fd1, buf, sizeof(buf), 0);
 
-      if (bytes_received <= 0) {
-        printf("Client disconnected.\n");
-        break;
-      }
-
-      printf("Received from client: %s\n", buf);
-
-      double base_salary = atof(buf);
-      double gross_salary = base_salary + 0.5 * base_salary + 0.15 * base_salary;
-
-      memset(buf, 0, sizeof(buf));
-      snprintf(buf, sizeof(buf), "%.2f", gross_salary);
-      send(fd1, buf, sizeof(buf), 0);
-
-      printf("Sent to client: Gross Salary = %.2f\n", gross_salary);
+    if (bytes_received <= 0) {
+      printf("Client disconnected.\n");
+      break;
     }
+
+    printf("Received from client: %s\n", buf);
+
+    double base_salary = atof(buf);
+    double gross_salary = base_salary + 0.5 * base_salary + 0.15 * base_salary;
+
+    memset(buf, 0, sizeof(buf));
+    snprintf(buf, sizeof(buf), "%.2f", gross_salary);
+    send(fd1, buf, sizeof(buf), 0);
+
+    printf("Sent to client: Gross Salary = %.2f\n", gross_salary);
 
     close(fd1);
   }

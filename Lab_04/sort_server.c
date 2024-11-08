@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 
@@ -56,7 +55,13 @@ int main() {
 
   // Read the array from the client
   printf("Receiving array from the client...\n");
-  valread = read(client_fd, buffer, sizeof(buffer));
+
+  valread = recv(client_fd, buffer, sizeof(buffer), 0);
+  if (valread < 0) {
+    perror("Recv failed");
+    exit(EXIT_FAILURE);
+  }
+
   printf("Array received from the client.\n");
 
   // The first element is the size of the array
