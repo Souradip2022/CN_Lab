@@ -21,14 +21,6 @@ int main() {
   sa.sin_port = htons(3000);
   sa.sin_addr.s_addr = inet_addr("127.0.0.1");
 
-  binding = bind(sockfd, (struct sockaddr *) &sa, sizeof(sa));
-
-  if (binding == -1) {
-    printf("Binding failed\n");
-  } else {
-    printf("Bind successful\n");
-  }
-
   for (int i = 0; i < 100; i++) {
     buf[i] = '\0';
   }

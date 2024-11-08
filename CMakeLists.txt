@@ -26,8 +26,8 @@ add_executable(sort_server Lab_04/sort_server.c)
 add_executable(file_transfer_server Lab_05/file_transfer_server.c)
 add_executable(client Lab_05/file_download_client.c)
 
-add_executable(salary_client Lab_07/client.c)
-add_executable(salary_server Lab_07/server.c)
+add_executable(salary_client Lab_07/salary_client.c)
+add_executable(salary_server Lab_07/salary_server.c)
 
 add_executable(test test.c)
 
