@@ -7,8 +7,15 @@
 int main() {
   int sock = 0, valread;
   struct sockaddr_in serv_addr;
-  int array[1024] = {5, 3, 2, 4, 1};  // Example array
-  int n = 5;  // Number of elements in the array
+  int n;
+
+  printf("Enter the number of elements: ");
+  scanf("%d", &n);
+  int array[n];
+  printf("Enter the elements:\n");
+  for (int i = 0; i < n; i++) {
+    scanf("%d", &array[i]);
+  }
 
   int buffer[1024] = {0};
   buffer[0] = n;
@@ -16,7 +23,7 @@ int main() {
 
   // Create socket
   if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-    printf("\n Socket creation error \n");
+    printf("Socket creation error\n");
     return -1;
   }
 
@@ -25,21 +32,26 @@ int main() {
 
   // Convert IPv4 and IPv6 addresses from text to binary form
   if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
-    printf("\nInvalid address/ Address not supported \n");
+    printf("Invalid address/ Address not supported\n");
     return -1;
   }
 
   // Connect to the server
-  if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
-    printf("\nConnection Failed \n");
+  printf("Connecting to the server...\n");
+  if (connect(sock, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+    printf("Connection Failed\n");
     return -1;
   }
+  printf("Connected to the server.\n");
 
   // Send the array to the server
+  printf("Sending array to the server...\n");
   send(sock, buffer, sizeof(buffer), 0);
+  printf("Array sent to the server.\n");
 
   // Read the sorted array from the server
   valread = read(sock, buffer, sizeof(buffer));
+  printf("Received sorted array from the server.\n");
 
   // Print the sorted array
   printf("Sorted array: ");
@@ -49,6 +61,7 @@ int main() {
   printf("\n");
 
   // Close the socket
+  printf("Closing connection.\n");
   close(sock);
 
   return 0;
